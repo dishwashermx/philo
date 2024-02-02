@@ -6,7 +6,7 @@
 /*   By: ghwa <ghwa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 14:35:02 by ghwa              #+#    #+#             */
-/*   Updated: 2024/01/29 15:53:10 by ghwa             ###   ########.fr       */
+/*   Updated: 2024/02/02 17:04:34 by ghwa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define PHILO_H
 
 # include "../libft/libft.h"
-# include <pthread.h>
+// # include <pthread.h>
+
+int		checkargs(int argc, char **argv);
 
 #endif
