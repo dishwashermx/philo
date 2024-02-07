@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checkargs.c                                        :+:      :+:    :+:   */
+/*   initall.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghwa <ghwa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/02 16:47:23 by ghwa              #+#    #+#             */
-/*   Updated: 2024/02/02 16:47:23 by ghwa             ###   ########.fr       */
+/*   Created: 2024/02/07 13:06:57 by ghwa              #+#    #+#             */
+/*   Updated: 2024/02/07 13:06:57 by ghwa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	checkargs(int argc, char **argv)
+void	init_values(int argc, char **argv, t_philo *philo)
 {
-	int	i;
+	philo->num_of_philos = ft_atoi(argv[1]);
+	philo->time_to_die = ft_atoi(argv[2]);
+	philo->time_to_eat = ft_atoi(argv[3]);
+	philo->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		philo->num_times_to_eat = ft_atoi(argv[5]);
+}
 
-	i = 1;
-	if (argc < 5 || argc > 6 || ft_atoi(argv[1]) > 200)
-		return (0);
-	while (argv[i] != NULL)
-	{
-		if (ft_atoi(argv[i]) < 0)
-			return (0);
-		if (ft_atol(argv[i]) > 2147483647 \
-		|| ft_atol(argv[i]) < -2147483648)
-			return (0);
-	}
-	if (ft_isdigitarray(argv) == 0)
-		return (0);
-	return (1);
+int	initall(int argc, char **argv, t_philo *philo)
+{
+	init_values(argc, argv, philo);
+	
+	return (0);
 }

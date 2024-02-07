@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghwa <ghwa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 14:35:02 by ghwa              #+#    #+#             */
-/*   Updated: 2024/02/02 17:04:34 by ghwa             ###   ########.fr       */
+/*   Created: 2024/01/29 15:53:30 by ghwa              #+#    #+#             */
+/*   Updated: 2024/02/02 17:07:03 by ghwa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#include "philo.h"
 
-# include "../libft/libft.h"
-# include <pthread.h>
-
-typedef struct s_philo
+int	main(int argc, char **argv)
 {
-	int				num_of_philos;
-	size_t			time_to_die;
-	size_t			time_to_eat;
-	size_t			time_to_sleep;
-	int				num_times_to_eat;
-}					t_philo;
+	t_philo	philo;
 
-int		checkargs(int argc, char **argv);
-int		initall(int argc, char **argv, t_philo *philo);
-
-#endif
+	if (checkargs(argc, argv) == 0)
+		ft_printf("ERROR\nInvalid Arguments");
+	initall(argc, argv, &philo);
+	return (0);
+}
