@@ -25,7 +25,8 @@ typedef struct s_philo
 	int				num_times_to_eat;
 }					t_philo;
 
-int		checkargs(int argc, char **argv);
-int		initall(int argc, char **argv, t_philo *philo);
+int				checkargs(int argc, char **argv);
+int				initall(int argc, char **argv, t_philo *philo);
+pthread_mutex_t	*init_mutexes(t_philo *philo, pthread_mutex_t *forks);
 
 #endif
