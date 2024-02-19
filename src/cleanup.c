@@ -12,22 +12,19 @@
 
 #include "philo.h"
 
-int	free_mutexes(t_philo *philo)
+int	error(char *msg)
 {
-	int	i;
-	
-	i = 0;
-	while (i < philo->num_of_philos)
-	{
-		pthread_mutex_destroy(&forks[i]);
-	}
+	ft_printf("Error, %s\n", msg);
+	return (0);
 }
 
-int	freeall(t_philo *philo)
+int	free_mutexes(t_info *info)
 {
-	free_mutexes(philo);
+	int	i;
 
-	 for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
-        pthread_mutex_destroy(&forks[i]);
-    }
+	i = 0;
+	while (i < info->num_of_philos)
+	{
+		pthread_mutex_destroy(&info->fork[i]);
+	}
 }

@@ -14,12 +14,9 @@
 
 int	main(int argc, char **argv)
 {
-	t_philo			philo;
-	pthread_mutex_t	forks[ft_atoi(argv[1])];
+	t_info	info;
+	t_philo	philo[200];
 
-	if (checkargs(argc, argv) == 0)
-		ft_printf("ERROR\nInvalid Arguments");
-	initall(argc, argv, &philo);
-	init_mutexes(&philo, forks);
+	initall(argc, argv, &info, philo);
 	return (0);
 }

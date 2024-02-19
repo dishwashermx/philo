@@ -12,30 +12,73 @@
 
 #include "philo.h"
 
-void	init_values(int argc, char **argv, t_philo *philo)
-{
-	philo->num_of_philos = ft_atoi(argv[1]);
-	philo->time_to_die = ft_atoi(argv[2]);
-	philo->time_to_eat = ft_atoi(argv[3]);
-	philo->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		philo->num_times_to_eat = ft_atoi(argv[5]);
-}
-
-pthread_mutex_t	*init_mutexes(t_philo *philo, pthread_mutex_t *forks)
+int	checkargs(int argc, char **argv)
 {
 	int	i;
 
-	i = 0;
-	while (i < philo->num_of_philos)
-		pthread_mutex_init(forks[i], NULL);
-	return (forks);
+	i = 1;
+	if (argc < 5 || argc > 6 || ft_atoi(argv[1]) > 200)
+		return (0);
+	while (argv[i] != NULL)
+	{
+		if (ft_atoi(argv[i]) < 0)
+			return (0);
+		if (ft_atol(argv[i]) > 2147483647)
+			return (0);
+	}
+	if (ft_isdigitarray(argv) == 0)
+		return (0);
+	return (1);
 }
 
-int	initall(int argc, char **argv, t_philo *philo)
+void	init_values(int argc, char **argv, t_info *info)
 {
-	init_values(argc, argv, philo);
-	init_mutexes(philo);
-	init_threads(philo);
+	info->num_of_philos = ft_atoi(argv[1]);
+	info->time_to_die = ft_atoi(argv[2]);
+	info->time_to_eat = ft_atoi(argv[3]);
+	info->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		info->num_times_to_eat = ft_atoi(argv[5]);
+	info->dieded = 0;
+	info->ateed = 0;
+}
+
+pthread_mutex_t	*init_mutex(t_info *info, t_philo philo[200])
+{
+	int	i;
+
+	i = -1;
+	while (++i < info->num_of_philos)
+	{
+		philo[i].id = i;
+		philo[i].info = info;
+		if (pthread_mutex_init(&info->fork[i], NULL))
+			return ;
+	}
+	if (pthread_mutex_init(&info->die_lock, NULL))
+		return ;
+	if (pthread_mutex_init(&info->ate_lock, NULL))
+		return ;
+}
+
+int	init_threads(t_info *info, t_philo philo[200])
+{
+	int	i;
+
+	i = -1;
+	while (++i < info->num_of_philos)
+	{
+		if (pthread_create(&philo[i].thread, NULL, &routine, NULL))
+			return ;
+	}
+}
+
+int	initall(int argc, char **argv, t_info *info, t_philo philo[200])
+{
+	if (checkargs(argc, argv) == 0)
+		return (error("Invalid Arguments"));
+	init_values(argc, argv, info);
+	init_mutex(info, philo);
+	init_threads(info, philo);
 	return (0);
 }

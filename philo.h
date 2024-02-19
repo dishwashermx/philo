@@ -16,17 +16,31 @@
 # include "../libft/libft.h"
 # include <pthread.h>
 
-typedef struct s_philo
+typedef struct s_generalinformation
 {
 	int				num_of_philos;
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
 	int				num_times_to_eat;
-}					t_philo;
+	pthread_mutex_t	fork[200];
+	pthread_mutex_t	die_lock;
+	pthread_mutex_t	ate_lock;
+	int				dieded;
+	int				ateed;
+}	t_info;
 
-int				checkargs(int argc, char **argv);
-int				initall(int argc, char **argv, t_philo *philo);
-pthread_mutex_t	*init_mutexes(t_philo *philo, pthread_mutex_t *forks);
+typedef struct s_philospher
+{
+	pthread_t		thread;
+	int				id;
+	t_info			*info;
+}	t_philo;
+
+int				initall(int argc, char **argv, \
+t_info *info, t_philo philo[200]);
+int				error(char *msg);
+int				free_mutexes(t_info *info);
+void			*routine(t_philo *philo);
 
 #endif
