@@ -27,4 +27,5 @@ int	free_mutexes(t_info *info)
 	{
 		pthread_mutex_destroy(&info->fork[i]);
 	}
+	return (0);
 }

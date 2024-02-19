@@ -11,24 +11,19 @@
 # **************************************************************************** #
 
 NAME = philo
-FILES = main.c checkargs.c initall.c
+FILES = main.c cleanup.c initall.c routine.c
 SRC = $(addprefix src/, $(FILES))
 OBJ = $(SRC:%.c=%.o)
 FLAGS = -Werror -Wextra -Wall -ggdb -g3 -pthread -fsanitize=address 
 CC = cc
-LIBFT_DIR = ../libft
-LIBFT = $(LIBFT_DIR)/libft.a
 
 all: $(NAME)
-
-lib:
-	@make -C ${LIBFT_DIR} re
 
 %.o: %.c
 	$(CC) $(FLAGS) -I . -c $< -o $@
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(LIBFT)
+	$(CC) $(FLAGS) $(OBJ) -o $(NAME)
 
 clean:
 	rm -f src/*.o
@@ -38,4 +33,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re lib
+.PHONY: all clean fclean re

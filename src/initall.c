@@ -43,7 +43,7 @@ void	init_values(int argc, char **argv, t_info *info)
 	info->ateed = 0;
 }
 
-pthread_mutex_t	*init_mutex(t_info *info, t_philo philo[200])
+void	init_mutex(t_info *info, t_philo philo[200])
 {
 	int	i;
 
@@ -61,14 +61,14 @@ pthread_mutex_t	*init_mutex(t_info *info, t_philo philo[200])
 		return ;
 }
 
-int	init_threads(t_info *info, t_philo philo[200])
+void	init_threads(t_info *info, t_philo philo[200])
 {
 	int	i;
 
 	i = -1;
 	while (++i < info->num_of_philos)
 	{
-		if (pthread_create(&philo[i].thread, NULL, &routine, NULL))
+		if (pthread_create(&philo[i].thread, NULL, &routine, &philo[i]))
 			return ;
 	}
 }
