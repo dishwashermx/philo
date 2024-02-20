@@ -14,7 +14,7 @@
 
 int	error(char *msg)
 {
-	ft_printf("Error, %s\n", msg);
+	printf("Error, %s\n", msg);
 	return (0);
 }
 
@@ -26,6 +26,7 @@ int	free_mutexes(t_info *info)
 	while (i < info->num_of_philos)
 	{
 		pthread_mutex_destroy(&info->fork[i]);
+		i++;
 	}
 	return (0);
 }

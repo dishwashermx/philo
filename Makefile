@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = philo
-FILES = main.c cleanup.c initall.c routine.c
+FILES = main.c cleanup.c initall.c routine.c libutils.c
 SRC = $(addprefix src/, $(FILES))
 OBJ = $(SRC:%.c=%.o)
 FLAGS = -Werror -Wextra -Wall -ggdb -g3 -pthread -fsanitize=address 

@@ -25,6 +25,7 @@ int	checkargs(int argc, char **argv)
 			return (0);
 		if (ft_atol(argv[i]) > 2147483647)
 			return (0);
+		i++;
 	}
 	if (ft_isdigitarray(argv) == 0)
 		return (0);
@@ -41,6 +42,7 @@ void	init_values(int argc, char **argv, t_info *info)
 		info->num_times_to_eat = ft_atoi(argv[5]);
 	info->dieded = 0;
 	info->ateed = 0;
+	info->timestart = get_current_time();
 }
 
 void	init_mutex(t_info *info, t_philo philo[200])

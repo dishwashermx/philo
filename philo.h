@@ -13,8 +13,11 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "../libft/libft.h"
 # include <pthread.h>
+# include <stdio.h>
+# include <sys/time.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_generalinformation
 {
@@ -28,6 +31,7 @@ typedef struct s_generalinformation
 	pthread_mutex_t	ate_lock;
 	int				dieded;
 	int				ateed;
+	size_t			timestart;
 }	t_info;
 
 typedef struct s_philospher
@@ -41,6 +45,13 @@ int				initall(int argc, char **argv, \
 t_info *info, t_philo philo[200]);
 int				error(char *msg);
 int				free_mutexes(t_info *info);
-void			*routine(t_philo *philo);
-
+void			*routine(void *philo);
+int				ft_isdigitarray(char **str);
+long			ft_atol(const char *str);
+int				ft_atoi(const char *str);
+int				ft_strlen(const char *s);
+char			*ft_strdup(const char *s1);
+int				ft_usleep(size_t milliseconds);
+size_t			get_current_time(void);
+void			printtimestamps(t_info *info, t_philo *philo, char code);
 #endif
