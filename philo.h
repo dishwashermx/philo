@@ -29,6 +29,7 @@ typedef struct s_generalinformation
 	pthread_mutex_t	fork[200];
 	pthread_mutex_t	die_lock;
 	pthread_mutex_t	ate_lock;
+	pthread_mutex_t	write_lock;
 	int				dieded;
 	int				ateed;
 	size_t			timestart;
@@ -38,20 +39,27 @@ typedef struct s_philospher
 {
 	pthread_t		thread;
 	int				id;
+	size_t			last_ate;
 	t_info			*info;
 }	t_philo;
 
-int				initall(int argc, char **argv, \
-t_info *info, t_philo philo[200]);
-int				error(char *msg);
-int				free_mutexes(t_info *info);
-void			*routine(void *philo);
-int				ft_isdigitarray(char **str);
-long			ft_atol(const char *str);
-int				ft_atoi(const char *str);
-int				ft_strlen(const char *s);
-char			*ft_strdup(const char *s1);
-int				ft_usleep(size_t milliseconds);
-size_t			get_current_time(void);
-void			printtimestamps(t_info *info, t_philo *philo, char code);
+int		initall(int argc, char **argv, t_info *info, t_philo philo[200]);
+int		error(char *msg);
+int		free_mutexes(t_info *info);
+void	*routine(void *philo);
+int		ft_isdigitarray(char **str);
+long	ft_atol(const char *str);
+int		ft_atoi(const char *str);
+int		ft_strlen(const char *s);
+char	*ft_strdup(const char *s1);
+int		ft_usleep(size_t milliseconds);
+size_t	get_current_time(void);
+int		printmsg(t_info *info, t_philo *philo, char code);
+int		ph_takeforks(t_philo *philo);
+int		ph_eat(t_philo *philo);
+int		ph_sleep(t_philo *philo);
+int		ph_think(t_philo *philo);
+int		if_dead(t_philo *philo);
+int		join_threads(t_info *info, t_philo philo[200]);
+void	free_forks(t_philo *philo);
 #endif

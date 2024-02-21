@@ -5,50 +5,53 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghwa <ghwa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 13:07:58 by ghwa              #+#    #+#             */
-/*   Updated: 2024/02/20 13:44:48 by ghwa             ###   ########.fr       */
+/*   Created: 2024/02/21 13:30:29 by ghwa              #+#    #+#             */
+/*   Updated: 2024/02/21 19:27:14 by ghwa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_usleep(size_t milliseconds)
+int	ph_takeforks(t_philo *philo)
 {
-	size_t	start;
-
-	start = get_current_time();
-	while ((get_current_time() - start) < milliseconds)
-		usleep(500);
-	return (0);
+	pthread_mutex_lock(&philo->info->fork[philo->id]);
+	if (!printmsg(philo->info, philo, 'f'))
+		return (0);
+	pthread_mutex_lock(&philo->info->fork[(philo->id + 1) \
+	% philo->info->num_of_philos]);
+	if (!printmsg(philo->info, philo, 'f'))
+		return (0);
+	return (1);
 }
 
-size_t	get_current_time(void)
+int	ph_eat(t_philo *philo)
 {
-	struct timeval	time;
-
-	if (gettimeofday(&time, NULL) == -1)
-		return (error("Time of Day"));
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+	if (philo->info->num_of_philos < 2)
+		return ((void)pthread_mutex_unlock(&philo->info->fork[philo->id]), 1);
+	philo->last_ate = get_current_time();
+	if (!printmsg(philo->info, philo, 'e'))
+		return (0);
+	ft_usleep(200);
+	pthread_mutex_lock(&philo->info->ate_lock);
+	philo->info->ateed++;
+	pthread_mutex_unlock(&philo->info->ate_lock);
+	pthread_mutex_unlock(&philo->info->fork[philo->id]);
+	pthread_mutex_unlock(&philo->info->fork[(philo->id + 1) \
+	% philo->info->num_of_philos]);
+	return (1);
 }
 
-void	printtimestamps(t_info *info, t_philo *philo, char code)
+int	ph_sleep(t_philo *philo)
 {
-	size_t	time;
-	char	*action;
+	if (!printmsg(philo->info, philo, 's'))
+		return (0);
+	ft_usleep(philo->info->time_to_sleep);
+	return (1);
+}
 
-	action = NULL;
-	if (code == 'f')
-		action = ft_strdup("has taken a fork");
-	else if (code == 'e')
-		action = ft_strdup("is eating");
-	else if (code == 's')
-		action = ft_strdup("is sleeping");
-	else if (code == 't')
-		action = ft_strdup("is thinking");
-	else if (code == 'd')
-		action = ft_strdup("died");
-	time = get_current_time() - info->timestart;
-	printf("%06zu %d %s\n", time, philo->id, action);
-	free (action);
-	return ;
+int	ph_think(t_philo *philo)
+{
+	if (!printmsg(philo->info, philo, 't'))
+		return (0);
+	return (1);
 }

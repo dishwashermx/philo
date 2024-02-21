@@ -11,10 +11,10 @@
 # **************************************************************************** #
 
 NAME = philo
-FILES = main.c cleanup.c initall.c routine.c libutils.c
+FILES = main.c cleanup.c initall.c routine.c lib_utils.c misc_utils.c
 SRC = $(addprefix src/, $(FILES))
 OBJ = $(SRC:%.c=%.o)
-FLAGS = -Werror -Wextra -Wall -ggdb -g3 -pthread -fsanitize=address 
+FLAGS = -Werror -Wextra -Wall -ggdb -g3 -pthread -fsanitize=thread
 CC = cc
 
 all: $(NAME)
