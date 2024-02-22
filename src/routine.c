@@ -6,7 +6,7 @@
 /*   By: ghwa <ghwa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:30:29 by ghwa              #+#    #+#             */
-/*   Updated: 2024/02/21 19:27:14 by ghwa             ###   ########.fr       */
+/*   Updated: 2024/02/22 13:47:56 by ghwa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,34 @@
 
 int	ph_takeforks(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->info->fork[philo->id]);
-	if (!printmsg(philo->info, philo, 'f'))
-		return (0);
-	pthread_mutex_lock(&philo->info->fork[(philo->id + 1) \
-	% philo->info->num_of_philos]);
-	if (!printmsg(philo->info, philo, 'f'))
-		return (0);
+	if (pthread_mutex_lock(&philo->info->fork[philo->id]) == 0)
+	{
+		if (!printmsg(philo->info, philo, 'f'))
+			return (0);
+	}
+	if (philo->info->num_of_philos == 1)
+	{
+		return (1);
+	}
+	else if (pthread_mutex_lock(&philo->info->fork[(philo->id + 1) \
+	% philo->info->num_of_philos]) == 0)
+	{
+		if (!printmsg(philo->info, philo, 'f'))
+			return (0);
+	}
 	return (1);
 }
 
 int	ph_eat(t_philo *philo)
 {
-	if (philo->info->num_of_philos < 2)
-		return ((void)pthread_mutex_unlock(&philo->info->fork[philo->id]), 1);
+	if (philo->info->num_of_philos == 1)
+		return (1);
+	pthread_mutex_lock(&philo->info->ate_lock);
 	philo->last_ate = get_current_time();
+	pthread_mutex_unlock(&philo->info->ate_lock);
 	if (!printmsg(philo->info, philo, 'e'))
 		return (0);
-	ft_usleep(200);
+	ft_usleep(philo->info->time_to_eat);
 	pthread_mutex_lock(&philo->info->ate_lock);
 	philo->info->ateed++;
 	pthread_mutex_unlock(&philo->info->ate_lock);
@@ -43,6 +53,8 @@ int	ph_eat(t_philo *philo)
 
 int	ph_sleep(t_philo *philo)
 {
+	if (philo->info->num_of_philos == 1)
+		pthread_mutex_unlock(&philo->info->fork[philo->id]);
 	if (!printmsg(philo->info, philo, 's'))
 		return (0);
 	ft_usleep(philo->info->time_to_sleep);

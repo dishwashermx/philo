@@ -31,6 +31,7 @@ typedef struct s_generalinformation
 	pthread_mutex_t	ate_lock;
 	pthread_mutex_t	write_lock;
 	int				dieded;
+	int				done_ateing;
 	int				ateed;
 	size_t			timestart;
 }	t_info;
@@ -59,7 +60,8 @@ int		ph_takeforks(t_philo *philo);
 int		ph_eat(t_philo *philo);
 int		ph_sleep(t_philo *philo);
 int		ph_think(t_philo *philo);
-int		if_dead(t_philo *philo);
+int		we_done(t_info *info);
+int		is_dead(t_philo *philo);
 int		join_threads(t_info *info, t_philo philo[200]);
 void	free_forks(t_philo *philo);
 #endif

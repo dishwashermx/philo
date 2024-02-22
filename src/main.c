@@ -16,8 +16,16 @@ int	main(int argc, char **argv)
 {
 	t_info	info;
 	t_philo	philo[200];
+	int	i;
 
+	i = 0;
 	initall(argc, argv, &info, philo);
+	while (is_dead(&philo[i]) == 0 && we_done(&info) == 0)
+	{
+		i++;
+		if (i == info.num_of_philos)
+			i = 0;
+	}
 	join_threads(&info, philo);
 	free_mutexes(&info);
 	return (0);
@@ -29,8 +37,8 @@ void	*routine(void *philovoid)
 
 	philo = (t_philo *)(philovoid);
 	if (philo->id % 2 != 0)
-		ft_usleep(philo->info->time_to_sleep);
-	while (if_dead(philo))
+		ft_usleep(1);
+	while (1)
 	{
 		if (!ph_takeforks(philo))
 			break ;

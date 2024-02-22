@@ -43,6 +43,7 @@ void	init_values(int argc, char **argv, t_info *info)
 	else
 		info->num_times_to_eat = -1;
 	info->dieded = 0;
+	info->done_ateing = 0;
 	info->ateed = 0;
 	info->timestart = get_current_time();
 }
