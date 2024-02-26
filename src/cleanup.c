@@ -31,7 +31,6 @@ int	free_mutexes(t_info *info)
 	pthread_mutex_destroy(&info->ate_lock);
 	pthread_mutex_destroy(&info->write_lock);
 	pthread_mutex_destroy(&info->die_lock);
-
 	return (0);
 }
 

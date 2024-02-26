@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_info	info;
 	t_philo	philo[200];
-	int	i;
+	int		i;
 
 	i = 0;
 	initall(argc, argv, &info, philo);
