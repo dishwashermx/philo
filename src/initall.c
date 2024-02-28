@@ -91,5 +91,5 @@ int	initall(int argc, char **argv, t_info *info, t_philo philo[200])
 	init_values(argc, argv, info);
 	init_mutex(info, philo);
 	init_threads(info, philo);
-	return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ghwa <ghwa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:07:58 by ghwa              #+#    #+#             */
-/*   Updated: 2024/02/22 14:31:18 by ghwa             ###   ########.fr       */
+/*   Updated: 2024/02/26 14:08:01 by ghwa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ int	we_done(t_info *info)
 {
 	pthread_mutex_lock(&info->ate_lock);
 	if (info->num_times_to_eat < 0)
-		return (pthread_mutex_unlock(&info->ate_lock));
+	{
+		pthread_mutex_unlock(&info->ate_lock);
+		return (0);
+	}
 	if (info->ateed >= info->num_times_to_eat * info->num_of_philos)
 	{
 		info->done_ateing++;

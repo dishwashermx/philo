@@ -6,7 +6,7 @@
 /*   By: ghwa <ghwa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:30:29 by ghwa              #+#    #+#             */
-/*   Updated: 2024/02/22 13:47:56 by ghwa             ###   ########.fr       */
+/*   Updated: 2024/02/26 14:00:08 by ghwa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,11 @@ int	ph_eat(t_philo *philo)
 		return (1);
 	pthread_mutex_lock(&philo->info->ate_lock);
 	philo->last_ate = get_current_time();
+	philo->info->ateed++;
 	pthread_mutex_unlock(&philo->info->ate_lock);
 	if (!printmsg(philo->info, philo, 'e'))
 		return (0);
 	ft_usleep(philo->info->time_to_eat);
-	pthread_mutex_lock(&philo->info->ate_lock);
-	philo->info->ateed++;
-	pthread_mutex_unlock(&philo->info->ate_lock);
 	pthread_mutex_unlock(&philo->info->fork[philo->id]);
 	pthread_mutex_unlock(&philo->info->fork[(philo->id + 1) \
 	% philo->info->num_of_philos]);

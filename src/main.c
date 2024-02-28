@@ -19,7 +19,8 @@ int	main(int argc, char **argv)
 	int		i;
 
 	i = 0;
-	initall(argc, argv, &info, philo);
+	if (initall(argc, argv, &info, philo) == 0)
+		return (0);
 	while (is_dead(&philo[i]) == 0 && we_done(&info) == 0)
 	{
 		i++;
