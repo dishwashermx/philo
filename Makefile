@@ -14,7 +14,7 @@ NAME = philo
 FILES = main.c cleanup.c initall.c routine.c lib_utils.c misc_utils.c
 SRC = $(addprefix src/, $(FILES))
 OBJ = $(SRC:%.c=%.o)
-FLAGS = -Werror -Wextra -Wall -ggdb -g3 -pthread -fsanitize=thread
+FLAGS = -Werror -Wextra -Wall -ggdb -g3 -pthread -fsanitize=address
 CC = cc
 
 all: $(NAME)

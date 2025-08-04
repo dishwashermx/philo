@@ -46,6 +46,10 @@ void	init_values(int argc, char **argv, t_info *info)
 	info->done_ateing = 0;
 	info->ateed = 0;
 	info->timestart = get_current_time();
+	info->fork = malloc(sizeof(pthread_mutex_t) * info->num_of_philos);
+	if (!info->fork)
+		return (void)error("malloc failed for forks");
+
 }
 
 void	init_mutex(t_info *info, t_philo philo[200])

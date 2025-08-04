@@ -18,9 +18,14 @@ int	main(int argc, char **argv)
 	t_philo	philo[200];
 	int		i;
 
-	i = 0;
+	if (argc < 5 || argc > 6)
+	{
+		printf("Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
+		return (1);
+	}
 	if (initall(argc, argv, &info, philo) == 0)
-		return (0);
+		return (1);
+	i = 0;
 	while (is_dead(&philo[i]) == 0 && we_done(&info) == 0)
 	{
 		i++;

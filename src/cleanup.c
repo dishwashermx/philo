@@ -23,6 +23,7 @@ int	free_mutexes(t_info *info)
 	int	i;
 
 	i = 0;
+
 	while (i < info->num_of_philos)
 	{
 		pthread_mutex_destroy(&info->fork[i]);
@@ -31,6 +32,8 @@ int	free_mutexes(t_info *info)
 	pthread_mutex_destroy(&info->ate_lock);
 	pthread_mutex_destroy(&info->write_lock);
 	pthread_mutex_destroy(&info->die_lock);
+	free(info->fork);
+	info->fork = NULL;
 	return (0);
 }
 

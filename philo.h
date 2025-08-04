@@ -26,7 +26,7 @@ typedef struct s_generalinformation
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
 	int				num_times_to_eat;
-	pthread_mutex_t	fork[200];
+	pthread_mutex_t	*fork;
 	pthread_mutex_t	die_lock;
 	pthread_mutex_t	ate_lock;
 	pthread_mutex_t	write_lock;
